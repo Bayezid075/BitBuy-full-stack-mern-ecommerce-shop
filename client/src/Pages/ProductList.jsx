@@ -26,7 +26,7 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
-export default function Products() {
+export default function ProductList() {
   return (
     <Container>
       <Anouncment />

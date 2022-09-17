@@ -1,12 +1,13 @@
 import "./App.css";
+import Product from "./Pages/Product";
 // import Home from "./Pages/Home";import Home from "./Pages/Home";
-import Products from "./Pages/Products";
+// import ProductList from "./Pages/ProductList";
 
 function App() {
   return (
     <div className="App">
       {" "}
-      <Products />{" "}
+      <Product />{" "}
     </div>
   );
 }
