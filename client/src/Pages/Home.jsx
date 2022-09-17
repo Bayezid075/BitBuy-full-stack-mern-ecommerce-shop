@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Products from "../components/Products";
 import Slider from "../components/Slider";
 import NewsLatter from "../components/NewsLatter";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Categories />
       <Products />
       <NewsLatter />
+      <Footer />
     </div>
   );
 }
