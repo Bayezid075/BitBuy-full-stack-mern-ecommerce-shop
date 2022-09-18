@@ -1,5 +1,6 @@
 import "./App.css";
-import Login from "./Pages/Login";
+import Cart from "./Pages/Cart";
+// import Login from "./Pages/Login";
 // import Product from "./Pages/Product";
 // import Register from "./Pages/Register";
 // import Home from "./Pages/Home";import Home from "./Pages/Home";
@@ -9,7 +10,7 @@ function App() {
   return (
     <div className="App">
       {" "}
-      <Login />{" "}
+      <Cart />{" "}
     </div>
   );
 }
