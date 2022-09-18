@@ -5,9 +5,12 @@ import Anouncment from "../components/Anouncement";
 import NewsLatter from "../components/NewsLatter";
 import Footer from "../components/Footer";
 import Product from "../components/Products";
+import { mobile } from "../responsive";
 
 const Container = styled.div``;
-const Title = styled.h1``;
+const Title = styled.h1`
+  ${mobile({ textAlign: "center" })}
+`;
 const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -19,10 +22,12 @@ const FilterText = styled.span`
   font-size: 24px;
   font-weight: 600;
   margin-right: 20px;
+  ${mobile({ fontSize: "15px" })}
 `;
 const Select = styled.select`
   padding: 5px 10px;
   margin-right: 20px;
+  ${mobile({ margin: "10px 2px" })}
 `;
 const Option = styled.option``;
 
