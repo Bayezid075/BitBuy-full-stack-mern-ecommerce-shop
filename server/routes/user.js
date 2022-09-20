@@ -1,13 +1,29 @@
 const router = require("express").Router();
+const User = require("../models/User");
+const { VerifyToken, verifyAuthorization } = require("../routes/VerifyToken");
 
-router.get("/user", (req, res) => {
-  res.send("User Api");
-});
-
-router.post("/post", (req, res) => {
-  const username = req.body.username;
-  console.log(username);
-  res.send("your name " + username);
+// Update User
+router.put("/:id", verifyAuthorization, async (req, res) => {
+  if (req.body.password) {
+    req.body.password = CryptoJs.AES.encrypt(
+      req.body.password,
+      process.env.PASSWORD_SECRET
+    ).toString();
+  }
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(201).json(updatedUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 module.exports = router;
