@@ -6,6 +6,7 @@ dotenv.config();
 const UserRoute = require("./routes/user");
 const AuthRoute = require("./routes/Auth");
 const ProductRoute = require("./routes/Product");
+const CartRoute = require("./routes/Cart");
 
 mongoose
   .connect(process.env.MONGODB_URL)
@@ -15,6 +16,7 @@ app.use(express.json()); // this will be allow take json post request
 app.use("/api", UserRoute);
 app.use("/api", AuthRoute);
 app.use("/api/product", ProductRoute);
+app.use("/api/cart", CartRoute);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server running with 5000 Port !!");
