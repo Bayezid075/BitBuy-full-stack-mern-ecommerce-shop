@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const { VerifyToken, verifyAuthorization } = require("../routes/VerifyToken");
+const {
+  VerifyToken,
+  verifyAuthorization,
+  verifyAdminAuthorization,
+} = require("../routes/VerifyToken");
 
 // Update User
 router.put("/:id", verifyAuthorization, async (req, res) => {
@@ -23,6 +27,70 @@ router.put("/:id", verifyAuthorization, async (req, res) => {
     res.status(201).json(updatedUser);
   } catch (error) {
     res.status(500).json(error);
+  }
+});
+// Delete User
+router.delete("/:id", verifyAuthorization, async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.send(200).json("User has been deleted ");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get User
+
+router.get("/user/:id", verifyAdminAuthorization, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const { password, ...others } = user._doc;
+    res.status(200).json(others);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get all users
+
+router.get("/users", verifyAdminAuthorization, async (req, res) => {
+  const query = req.query.new;
+
+  try {
+    const user = query
+      ? await User.find().sort({ _id: -1 }).limit(1)
+      : await User.find();
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// get all Detail about users
+
+router.get("/stats", verifyAdminAuthorization, async (req, res) => {
+  const date = new Date();
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+
+  try {
+    const data = await User.aggregate([
+      { $match: { createdAt: { $gte: lastYear } } },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
