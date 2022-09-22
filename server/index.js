@@ -7,6 +7,7 @@ const UserRoute = require("./routes/user");
 const AuthRoute = require("./routes/Auth");
 const ProductRoute = require("./routes/Product");
 const CartRoute = require("./routes/Cart");
+const OrderRoute = require("./routes/Order");
 
 mongoose
   .connect(process.env.MONGODB_URL)
@@ -17,6 +18,7 @@ app.use("/api", UserRoute);
 app.use("/api", AuthRoute);
 app.use("/api/product", ProductRoute);
 app.use("/api/cart", CartRoute);
+app.use("/api/order", OrderRoute);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server running with 5000 Port !!");
