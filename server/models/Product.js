@@ -5,10 +5,10 @@ const ProductSchema = new mongoose.Schema(
     dscs: { type: String, required: true },
     img: { type: String, required: true },
     category: { type: Array, required: true },
-    size: { type: String, required: true },
-    color: { type: String, required: true },
+    size: { type: Array, required: true },
+    color: { type: Array, required: true },
     price: { type: Number, required: true },
-    isAdmin: { type: Boolean, default: false },
+    inStock: { type: Boolean, default: false },
   },
   {
     timestamps: true,

@@ -4,6 +4,7 @@ import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -40,15 +41,17 @@ const Input = styled.input`
   ${mobile({ width: "50px" })}
 `;
 const Logo = styled.h1`
-  font-weight: bold;
+  font-weight: 800;
   ${mobile({ fontSize: "24px" })}
 `;
 const MenuItem = styled.div`
   font-size: 14 px;
   cursor: pointer;
   margin-left: 25px;
+
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
+
 const Searchbar = styled.div`
   border: 0.5px solid lightgray;
   margin-left: 25px;
@@ -70,15 +73,23 @@ export default function Navbar() {
         </Left>{" "}
         <Center>
           {" "}
-          <Logo> BitBuy. </Logo>{" "}
+          <Link to="/">
+            <Logo>BitBuy.</Logo>{" "}
+          </Link>{" "}
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>LOGIN</MenuItem>
+          <Link to="/register">
+            <MenuItem>REGISTER</MenuItem>{" "}
+          </Link>
+          <Link to="/login">
+            <MenuItem>LOGIN</MenuItem>
+          </Link>
           <MenuItem>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlinedIcon />
-            </Badge>
+            <Link to="/cart">
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>{" "}
+            </Link>
           </MenuItem>
         </Right>
       </Wrapper>

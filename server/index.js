@@ -8,6 +8,12 @@ const AuthRoute = require("./routes/Auth");
 const ProductRoute = require("./routes/Product");
 const CartRoute = require("./routes/Cart");
 const OrderRoute = require("./routes/Order");
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 mongoose
   .connect(process.env.MONGODB_URL)
