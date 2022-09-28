@@ -34,18 +34,30 @@ export default function Products({ cat, filters, sort }) {
     cat &&
       setFilteredProduct(
         product.filter((item) =>
-          Object.entries(filters).every((key, value) =>
+          Object.entries(filters).every(([key, value]) =>
             item[key].includes(value)
           )
         )
       );
   }, [cat, filters, setFilteredProduct, product]);
 
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProduct((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "ase") {
+      setFilteredProduct((prev) => [...prev].sort((a, b) => a.price - b.price));
+    } else {
+      setFilteredProduct((prev) => [...prev].sort((a, b) => b.price - a.price));
+    }
+  }, [sort]);
+
   return (
     <Container>
-      {fiteredProduct.map((item) => (
-        <Product Item={item} />
-      ))}
+      {cat
+        ? fiteredProduct.map((item) => <Product Item={item} />)
+        : popularProducts.slice(0, 8).map((item) => <Product Item={item} />)}
     </Container>
   );
 }

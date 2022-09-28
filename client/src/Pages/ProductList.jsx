@@ -51,7 +51,7 @@ export default function ProductList() {
     <Container>
       <Anouncment />
       <Navbar />
-      <Title> Dresses </Title>
+      <Title> {catg} </Title>
       <FilterContainer>
         <Filter>
           <FilterText> Filter Product : </FilterText>
@@ -60,12 +60,12 @@ export default function ProductList() {
               {" "}
               Color{" "}
             </Option>
-            <Option> Black </Option>
-            <Option> Green </Option>
-            <Option> Red </Option>
-            <Option> Yellow </Option>
-            <Option> Blue </Option>
-            <Option> Teal </Option>
+            <Option> black </Option>
+            <Option> green </Option>
+            <Option> red </Option>
+            <Option> yellow </Option>
+            <Option> blue </Option>
+            <Option> teal </Option>
           </Select>
           <Select name="size" onChange={handleChange}>
             <Option disabled selected>
@@ -84,8 +84,8 @@ export default function ProductList() {
           <FilterText> Sort Product : </FilterText>
           <Select onChange={(e) => setSort(e.target.value)}>
             <Option selected> Newest </Option>
-            <Option value="Ase"> Price (Asc) </Option>
-            <Option value="Dese"> Price (Desc) </Option>
+            <Option value="asc"> Price (Asc) </Option>
+            <Option value="dese"> Price (Desc) </Option>
           </Select>
         </Filter>
       </FilterContainer>

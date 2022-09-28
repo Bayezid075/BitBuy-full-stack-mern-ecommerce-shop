@@ -5,6 +5,7 @@ import {
 } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   flex: 1;
   margin: 5px;
@@ -71,7 +72,9 @@ export default function Product({ Item }) {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <Link to={`/product/${Item._id}`}>
+            <SearchOutlined />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteBorder />
