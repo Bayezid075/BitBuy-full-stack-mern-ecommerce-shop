@@ -6,6 +6,11 @@ import NewsLatter from "../components/NewsLatter";
 import styled from "styled-components";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { publicReq } from "../requestMethod";
+import axios from "axios";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -57,6 +62,7 @@ const FilterColor = styled.div`
   background: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
+  border: 1px solid grey;
 `;
 
 const SizeFilter = styled.select`
@@ -98,39 +104,43 @@ const Button = styled.button`
 `;
 
 export default function Product() {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/product/" + id);
+        setProduct(res.data);
+        console.log(product._id);
+      } catch (error) {}
+    };
+    getProduct();
+  }, [id, product]);
+
   return (
     <Container>
       <Anouncement />
       <Navbar />
       <Wrapper>
         <ImageContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={product.img} />
         </ImageContainer>
         <InfoContainer>
-          <Title> Denim Jumpsuit </Title>
-          <Dscs>
-            {" "}
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti
-            magni quae consectetur inventore, voluptatum iste, cum laborum nobis
-            perspiciatis velit, harum quam quo autem enim cumque animi deleniti
-            ut saepe rem maiores repudiandae facilis. Hic.
-          </Dscs>
-          <Price> $20 </Price>
+          <Title>{product.title}</Title>
+          <Dscs>{product.dscs} </Dscs>
+          <Price> </Price>
           <FilterContainer>
             <Filter>
               <FilterTitle> Color : </FilterTitle>
               <FilterColor color="black" />
-              <FilterColor color="green" />
-              <FilterColor color="darkblue" />
             </Filter>
             <Filter>
               <FilterTitle> Size : </FilterTitle>
               <SizeFilter>
                 {" "}
-                <SizeFilterOption> S </SizeFilterOption>
-                <SizeFilterOption> M </SizeFilterOption>
                 <SizeFilterOption> L </SizeFilterOption>
-                <SizeFilterOption> XL </SizeFilterOption>
               </SizeFilter>
             </Filter>
           </FilterContainer>
