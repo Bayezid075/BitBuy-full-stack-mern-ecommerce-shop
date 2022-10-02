@@ -10,7 +10,6 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { publicReq } from "../requestMethod";
-import axios from "axios";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -74,6 +73,7 @@ const AddContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
   ${mobile({ width: "100%" })}
 `;
 const AmountContainer = styled.div`
@@ -107,6 +107,7 @@ export default function Product() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
+  const [qty, setQty] = useState(1);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -114,17 +115,16 @@ export default function Product() {
         const res = await publicReq.get("product/" + id);
         setProduct(res.data);
         console.log(res.data);
-        console.log(product);
       } catch {}
     };
     getProduct();
   }, [id]);
-  const blg = {
-    title: "hello world",
-    dscs: "welcome back another code",
-    img: "https://images.pexels.com/photos/9444009/pexels-photo-9444009.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    color: ["black", "red"],
-    size: ["L", "XL"],
+  const qtyHandler = (type) => {
+    if (type === "inc") {
+      setQty(qty + 1);
+    } else if (type === "dec") {
+      qty > 1 && setQty(qty - 1);
+    }
   };
 
   return (
@@ -142,7 +142,7 @@ export default function Product() {
           <FilterContainer>
             <Filter>
               <FilterTitle> Color : </FilterTitle>
-              {product.color.map((c) => (
+              {product.color?.map((c) => (
                 <FilterColor key={c} color={c} />
               ))}
             </Filter>
@@ -150,7 +150,7 @@ export default function Product() {
               <FilterTitle> Size : </FilterTitle>
               <SizeFilter>
                 {" "}
-                {product.size.map((sz) => (
+                {product.size?.map((sz) => (
                   <SizeFilterOption key={sz}> {sz} </SizeFilterOption>
                 ))}
               </SizeFilter>
@@ -158,9 +158,9 @@ export default function Product() {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount> 1</Amount>
-              <Add />
+              <Remove onClick={() => qtyHandler("dec")} />
+              <Amount> {qty} </Amount>
+              <Add onClick={() => qtyHandler("inc")} />
             </AmountContainer>
             <Button>ADD TO CART </Button>
           </AddContainer>
