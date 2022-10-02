@@ -111,13 +111,21 @@ export default function Product() {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/product/" + id);
+        const res = await publicReq.get("product/" + id);
         setProduct(res.data);
-        console.log(product._id);
-      } catch (error) {}
+        console.log(res.data);
+        console.log(product);
+      } catch {}
     };
     getProduct();
-  }, [id, product]);
+  }, [id]);
+  const blg = {
+    title: "hello world",
+    dscs: "welcome back another code",
+    img: "https://images.pexels.com/photos/9444009/pexels-photo-9444009.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    color: ["black", "red"],
+    size: ["L", "XL"],
+  };
 
   return (
     <Container>
@@ -134,13 +142,17 @@ export default function Product() {
           <FilterContainer>
             <Filter>
               <FilterTitle> Color : </FilterTitle>
-              <FilterColor color="black" />
+              {product.color.map((c) => (
+                <FilterColor key={c} color={c} />
+              ))}
             </Filter>
             <Filter>
               <FilterTitle> Size : </FilterTitle>
               <SizeFilter>
                 {" "}
-                <SizeFilterOption> L </SizeFilterOption>
+                {product.size.map((sz) => (
+                  <SizeFilterOption key={sz}> {sz} </SizeFilterOption>
+                ))}
               </SizeFilter>
             </Filter>
           </FilterContainer>
