@@ -10,6 +10,8 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { publicReq } from "../requestMethod";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../redux/cartRedux";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -76,6 +78,7 @@ const AddContainer = styled.div`
   cursor: pointer;
   ${mobile({ width: "100%" })}
 `;
+
 const AmountContainer = styled.div`
   display: flex;
   align-items: center;
@@ -108,6 +111,9 @@ export default function Product() {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [qty, setQty] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -127,6 +133,10 @@ export default function Product() {
     }
   };
 
+  const AddCartHandler = () => {
+    dispatch(cartActions.addProduct({ ...product, qty, color, size }));
+  };
+
   return (
     <Container>
       <Anouncement />
@@ -138,17 +148,17 @@ export default function Product() {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Dscs>{product.dscs} </Dscs>
-          <Price> </Price>
+          <Price> $ {product.price} </Price>
           <FilterContainer>
             <Filter>
               <FilterTitle> Color : </FilterTitle>
               {product.color?.map((c) => (
-                <FilterColor key={c} color={c} />
+                <FilterColor key={c} color={c} onClick={() => setColor(c)} />
               ))}
             </Filter>
             <Filter>
               <FilterTitle> Size : </FilterTitle>
-              <SizeFilter>
+              <SizeFilter onChange={(e) => setSize(e.target.value)}>
                 {" "}
                 {product.size?.map((sz) => (
                   <SizeFilterOption key={sz}> {sz} </SizeFilterOption>
@@ -162,7 +172,7 @@ export default function Product() {
               <Amount> {qty} </Amount>
               <Add onClick={() => qtyHandler("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART </Button>
+            <Button onClick={AddCartHandler}>ADD TO CART </Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

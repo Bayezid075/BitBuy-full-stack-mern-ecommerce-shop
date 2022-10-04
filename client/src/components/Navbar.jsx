@@ -5,6 +5,7 @@ import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   height: 60px;
@@ -60,6 +61,8 @@ const Searchbar = styled.div`
 `;
 
 export default function Navbar() {
+  const cartQuantity = useSelector((state) => state.cart.quantity);
+  console.log(cartQuantity);
   return (
     <Container>
       <Wrapper>
@@ -86,7 +89,7 @@ export default function Navbar() {
           </Link>
           <MenuItem>
             <Link to="/cart">
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={cartQuantity} color="primary">
                 <ShoppingCartOutlinedIcon />
               </Badge>{" "}
             </Link>
