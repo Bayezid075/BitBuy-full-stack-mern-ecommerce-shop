@@ -6,6 +6,8 @@ import Register from "./Pages/Register";
 import Home from "./Pages/Home";
 import ProductList from "./Pages/ProductList";
 import { Routes, Route, Navigate } from "react-router-dom";
+import PaymentScf from "./Pages/PaymentScf";
+import Pay from "./Pages/Pay";
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/psf" element={<PaymentScf />} />
+        <Route path="/pay" element={<Pay />} />
+
         <Route path="/product/:id" element={<Product />} />
         <Route path="/products/:category" element={<ProductList />} />
       </Routes>

@@ -8,6 +8,7 @@ const AuthRoute = require("./routes/Auth");
 const ProductRoute = require("./routes/Product");
 const CartRoute = require("./routes/Cart");
 const OrderRoute = require("./routes/Order");
+const PaymentRouter = require("./routes/Payment");
 const cors = require("cors");
 app.use(
   cors({
@@ -25,6 +26,7 @@ app.use("/api", AuthRoute);
 app.use("/api/product", ProductRoute);
 app.use("/api/cart", CartRoute);
 app.use("/api/order", OrderRoute);
+app.use("/api", PaymentRouter);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server running with 5000 Port !!");
