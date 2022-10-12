@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { LoginCall } from "../redux/apiCalls";
+import { useDispatch } from "react-redux";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -58,14 +60,31 @@ const Link = styled.a`
 `;
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const clickHandler = (e) => {
+    e.preventDefault();
+    LoginCall(dispatch, { username, password }); // its should be same as api request
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title> LOGIN </Title>
         <Form>
-          <Input type="text" placeholder="Username" />
-          <Input type="text" placeholder="Password" />
-          <Button> LOGIN </Button>
+          <Input
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="text"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={clickHandler}> LOGIN </Button>
           <Link> Reset Password </Link>
           <Link> Create New Account </Link>
         </Form>
